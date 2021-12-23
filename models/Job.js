@@ -1,4 +1,3 @@
-// var mongoose = require("mongoose");
 const mongoose = require('../db/connection')
 
 var Schema = mongoose.Schema;
