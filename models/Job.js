@@ -1,7 +1,10 @@
-var mongoose = require("mongoose");
+// var mongoose = require("mongoose");
+const mongoose = require('../db/connection')
+
 var Schema = mongoose.Schema;
 var Job = new Schema({
-  jobId: { type: String },
+  jobId: { type: Number },
+  ownerId: {type: Number},
   job__: { type: String },
   borough: { type: String },
   street_name: { type: String },

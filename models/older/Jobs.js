@@ -1,5 +1,6 @@
 const mongoose = require('../db/connection')
 
+
 const Jobs = new mongoose.Schema({
     jobId: Number,
     contractor: {
