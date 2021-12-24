@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var Job = new Schema({
   jobId: { type: Number },
   ownerId: {type: Number},
+  conLicense:{ type: String },
   job__: { type: String },
   borough: { type: String },
   street_name: { type: String },

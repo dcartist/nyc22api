@@ -3,7 +3,8 @@
 // const Owner = require('../models/Owner.js')
 // const jobsedit = require('./jobsEdit.json')
 const Job = require('../models/Job')
- const data = require('../data/jobs.json')
+const Contractor = require('../models/Contractor')
+const data = require('../data/jobs.json')
 
 //  let alteredData = data.map((items, index)=>
    
@@ -18,19 +19,44 @@ const Job = require('../models/Job')
 data.forEach(function (element, index) {
     element.jobId = index
     element.ownerId = index
+    element.jobs = []
   });
+
+let alteredData = data.map((element, idx)=>{
+  element.conLicense
+  data.forEach(function (item, index) {
+    if (element.conLicense == item.conLicense){
+      element.jobs.push(item.jobId)
+    }
+
+  });
+
+})
 
 
   Job.deleteMany({}).then(
     deleted => {
         console.log("deleted DB & Adding info")
         // createdb()
-        Job.insertMany(data).then(
-            results => {
-                console.log(results)
-                console.log("added data")
-            }
+
+        Contractor.deleteMany().then(
+          deletedContractor => {
+
+            Job.insertMany(data).then(
+              results => {
+                  // console.log(results)
+                  // console.log("added data")
+                  Contractor.insertMany(data).then(
+                    contractorResults => {
+                        console.log(contractorResults)
+                        console.log("added data")
+                    }
+                )
+              }
+          )
+          }
         )
+       
     }
 ).catch(err => { console.log(err) })
   console.log(data)
