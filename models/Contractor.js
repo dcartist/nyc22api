@@ -9,7 +9,7 @@ var Contractor = new Schema({
   conFirstName: { type: String },
   conLastName: { type: String },
   professional_cert: { type: String },
-  jobs: [],
+  contractorJobs: [],
   
 });
 

@@ -4,6 +4,7 @@
 // const jobsedit = require('./jobsEdit.json')
 const Job = require('../models/Job')
 const Contractor = require('../models/Contractor')
+const Client = require('../models/Client')
 const data = require('../data/jobs.json')
 
 //  let alteredData = data.map((items, index)=>
@@ -18,21 +19,38 @@ const data = require('../data/jobs.json')
 
 data.forEach(function (element, index) {
     element.jobId = index
-    element.ownerId = index
-    element.jobs = []
+    element.contractorJobs = []
+    element.clientJobs = []
   });
 
-let alteredData = data.map((element, idx)=>{
+data.forEach((element, idx)=>{
   element.conLicense
-  data.forEach(function (item, index) {
+  data.map(function (item, index) {
     if (element.conLicense == item.conLicense){
-      element.jobs.push(item.jobId)
+      element.contractorJobs.push(item.jobId)
     }
-
+  });
+  data.map(function (item, index) {
+    if (element.owner_sphone__ == item.owner_sphone__){
+      element.clientJobs.push(item.jobId)
+    }
   });
 
 })
 
+let clientsData = data.filter((v,i,a)=>a.findIndex(t=>(t.owner_sphone__===v.owner_sphone__))===i)
+
+clientsData.forEach((element, idx)=> element.ownerId = idx)
+// let clientsData = data.reduce((unique, o) => {
+//   if(!unique.some(obj => obj.clientJobs == o.clientJobs)) {
+//     unique.push(o);
+//     // console.log(obj.clientJobs)
+//   }
+//   return unique;
+// },[]);
+// clientsData.map(items=>console.log(items.clientJobs))
+
+// console.log(clientsData);
 
   Job.deleteMany({}).then(
     deleted => {
@@ -42,17 +60,29 @@ let alteredData = data.map((element, idx)=>{
         Contractor.deleteMany().then(
           deletedContractor => {
 
+        Client.deleteMany().then(
+          deletedClients => {
+
             Job.insertMany(data).then(
               results => {
                   // console.log(results)
                   // console.log("added data")
                   Contractor.insertMany(data).then(
                     contractorResults => {
-                        console.log(contractorResults)
-                        console.log("added data")
+                      // console.log(contractorResults)
+                        Client.insertMany(clientsData).then(
+                          clientResults => {
+                              console.log(clientResults)
+                              console.log("added data")
+                              
+                          }
+                      )
+                        
                     }
                 )
               }
+          )
+          }
           )
           }
         )
@@ -60,6 +90,11 @@ let alteredData = data.map((element, idx)=>{
     }
 ).catch(err => { console.log(err) })
   console.log(data)
+
+
+
+
+
 //  alteredData.map(items => console.log(items))
 // console.log(alteredData)
 // function createdb() {
