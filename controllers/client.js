@@ -54,4 +54,13 @@ router.post("/new", (req, res) => {
 
 })
 
+router.put("/update/:ownerId", (req, res) => {
+    Client.findOneAndUpdate({ ownerId: req.params.ownerId }, req.body, { new: true })
+        .then(update => res.json(update))
+})
+
+router.delete("/delete/:id", (req, res) => {
+    Client.findOneAndDelete({ ownerId: req.params.ownerId }).then(deleted => res.json(deleted))
+})
+
 module.exports = router
