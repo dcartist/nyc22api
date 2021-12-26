@@ -5,6 +5,8 @@
 const Job = require('../models/Job')
 const Contractor = require('../models/Contractor')
 const Client = require('../models/Client')
+const Result = require('../models/Results')
+
 const data = require('../data/jobs.json')
 
 //  let alteredData = data.map((items, index)=>
@@ -39,18 +41,16 @@ data.forEach((element, idx)=>{
 })
 
 let clientsData = data.filter((v,i,a)=>a.findIndex(t=>(t.owner_sphone__===v.owner_sphone__))===i)
+let contractosData = data.filter((v,i,a)=>a.findIndex(t=>(t.conLicense===v.conLicense))===i)
 
 clientsData.forEach((element, idx)=> element.ownerId = idx)
-// let clientsData = data.reduce((unique, o) => {
-//   if(!unique.some(obj => obj.clientJobs == o.clientJobs)) {
-//     unique.push(o);
-//     // console.log(obj.clientJobs)
-//   }
-//   return unique;
-// },[]);
-// clientsData.map(items=>console.log(items.clientJobs))
-
-// console.log(clientsData);
+// contractosData.forEach((element, idx)=> element.ownerId = idx)
+let FinalResults = {
+  clientCount: clientsData[clientsData.length-1].ownerId,
+  jobCount: data[data.length-1].jobId,
+  jobsDeletedCount: 0,
+  contractorCount: contractosData[contractosData.length-1].ownerId,
+}
 
   Job.deleteMany({}).then(
     deleted => {
@@ -67,13 +67,20 @@ clientsData.forEach((element, idx)=> element.ownerId = idx)
               results => {
                   // console.log(results)
                   // console.log("added data")
-                  Contractor.insertMany(data).then(
+                  Contractor.insertMany(contractosData).then(
                     contractorResults => {
                       // console.log(contractorResults)
                         Client.insertMany(clientsData).then(
                           clientResults => {
                               console.log(clientResults)
                               console.log("added data")
+                              Result.deleteMany().then(
+                                itemReults => {
+                                  Result.insertMany(FinalResults).then(
+                                    details => console.log( details)
+                                  )
+                                }
+                              )
                               
                           }
                       )
