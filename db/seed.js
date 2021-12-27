@@ -1,23 +1,8 @@
-// const Property = require('../models/Property.js')
-// const Contractor = require('../models/Contractor.js')
-// const Owner = require('../models/Owner.js')
-// const jobsedit = require('./jobsEdit.json')
 const Job = require('../models/Job')
 const Contractor = require('../models/Contractor')
 const Client = require('../models/Client')
 const Result = require('../models/Results')
-
 const data = require('../data/jobs.json')
-
-//  let alteredData = data.map((items, index)=>
-   
-//     {   
-//         items.jobId = index
-//         items.ownerId = index
-    
-//     }
-     
-//  )
 
 data.forEach(function (element, index) {
     element.jobId = index
@@ -52,7 +37,6 @@ let contractosData = data.filter((v,i,a)=>a.findIndex(t=>(t.conLicense===v.conLi
 
 
 clientsData.forEach((element, idx)=> element.ownerId = idx)
-// contractosData.forEach((element, idx)=> element.ownerId = idx)
 let FinalResults = {
   clientCount: clientsData[clientsData.length-1].ownerId,
   jobCount: data[data.length-1].jobId,
