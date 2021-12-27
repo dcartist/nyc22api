@@ -29,7 +29,10 @@ router.get("/name/last/:lastName", (req, res) => {
 router.get("/name/first/:firstName", (req, res) => {
 
     Client.find({ ownFirstName: { "$regex": req.params.firstName, "$options": "i" } }).then(showName => res.json(showName))
-    // Client.find({ ownLastName: req.params.lastName }).then(showName => res.json(showName))
+})
+router.get("/id/:id", (req, res) => {
+
+    Client.find({ ownerId: { "$regex": req.params.id, "$options": "i" } }).then(showName => res.json(showName))
 })
 
 router.post("/new", (req, res) => {

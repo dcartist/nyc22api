@@ -6,6 +6,11 @@ var Result = new Schema({
   jobCount: {type: Number},
   jobsDeletedCount: {type: Number},
   contractorCount: {type: Number},
+  BRONX:{type: Number},
+  QUEENS:{type: Number},
+  BROOKLYN:{type: Number},
+  MANHATTAN:{type: Number},
+  STATEN_ISLAND:{type: Number},
   
 });
 
