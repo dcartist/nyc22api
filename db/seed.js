@@ -40,8 +40,16 @@ data.forEach((element, idx)=>{
 
 })
 
+function counter(name){
+  let name = people.reduce(function (n, person) {
+    return n + (person.gender == 'boy');
+  }, 0);
+}
+
 let clientsData = data.filter((v,i,a)=>a.findIndex(t=>(t.owner_sphone__===v.owner_sphone__))===i)
 let contractosData = data.filter((v,i,a)=>a.findIndex(t=>(t.conLicense===v.conLicense))===i)
+
+
 
 clientsData.forEach((element, idx)=> element.ownerId = idx)
 // contractosData.forEach((element, idx)=> element.ownerId = idx)
