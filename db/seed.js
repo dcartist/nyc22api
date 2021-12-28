@@ -25,7 +25,7 @@ data.forEach((element, idx)=>{
 
 })
 
-function counter(name){
+function counter(trialname){
   let name = people.reduce(function (n, person) {
     return n + (person.gender == 'boy');
   }, 0);
