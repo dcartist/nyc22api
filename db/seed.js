@@ -1,5 +1,7 @@
-const Job = require('../models/Job')
+// const Job = require('../models/Job')
+
 const Contractor = require('../models/Contractor')
+const Job = requre('../models/Job')
 const Client = require('../models/Client')
 const Result = require('../models/Results')
 const data = require('../data/jobs.json')
