@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 // const Property = require('../models/Property.js')
 // const Contractor = require('../models/Contractor.js')
-// const Jobs = require('../models/Jobs.js')
+const Job = require('../models/Job.js')
 const Client = require('../models/Client.js')
 const Result = require('../models/Results.js')
 
@@ -30,9 +30,15 @@ router.get("/name/first/:firstName", (req, res) => {
 
     Client.find({ ownFirstName: { "$regex": req.params.firstName, "$options": "i" } }).then(showName => res.json(showName))
 })
-router.get("/id/:id", (req, res) => {
-
-    Client.find({ ownerId: { "$regex": req.params.id, "$options": "i" } }).then(showName => res.json(showName))
+router.get("/jobs/:id", async (req, res) =>{ 
+    let firstresults = await Client.find({ ownerId:req.params.id})
+    var results = []
+    for (let i = 0; i<firstresults[0].clientJobs.length; i++){
+        console.log(firstresults[0].clientJobs[i])
+        let jobDetails = await Job.findOne({jobId: firstresults[0].clientJobs[i]});
+        results.push(jobDetails)
+    }
+    res.json(results)
 })
 
 router.post("/new", (req, res) => {
