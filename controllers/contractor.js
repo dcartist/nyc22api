@@ -9,10 +9,18 @@ router.get("/", (req, res) => {
     })
 })
 
-router.get("/name/:conLastName", (req, res) => {
-    let theName = req.params.conLastName
-    Contractor.find({ conLastName: theName }).then(showName => res.json(showName))
+// router.get("/name/:conLastName", (req, res) => {
+//     let theName = req.params.conLastName
+//     Contractor.find({ conLastName: theName }).then(showName => res.json(showName))
+// })
+
+
+router.get("/name/last/:conLastName", (req, res) => {
+
+    Contractor.find({ conLastName: { "$regex": req.params.conLastName, "$options": "i" } }).then(showName => res.json(showName))
+    // Client.find({ ownLastName: req.params.lastName }).then(showName => res.json(showName))
 })
+
 router.get("/id/:id", (req, res) => {
     Contractor.find({  conLicense: req.params.conLicense }).then(showName => res.json(showName))
 })
