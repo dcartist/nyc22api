@@ -9,12 +9,6 @@ router.get("/", (req, res) => {
     })
 })
 
-// router.get("/name/:conLastName", (req, res) => {
-//     let theName = req.params.conLastName
-//     Contractor.find({ conLastName: theName }).then(showName => res.json(showName))
-// })
-
-
 router.get("/name/last/:conLastName", (req, res) => {
 
     Contractor.find({ conLastName: { "$regex": req.params.conLastName, "$options": "i" } }).then(showName => res.json(showName))

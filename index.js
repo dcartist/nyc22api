@@ -19,8 +19,6 @@ app.get('/', function(req, res){
 })
 app.use('/api/client', clientController)
 app.use('/api/contractor', conController)
-// app.use("/api/owner", ownController)
-// app.use("/api/property", propController)
 app.use("/api/job", jobController)
 
 // app.get('/api', function(req, res) {
