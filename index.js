@@ -15,8 +15,10 @@ app.use(express.json());
     //     res.send("Welcome")
     // })
 app.get('/', function(req, res){
-    res.send("test")
+    res.json({"answer":"42"})
 })
+
+
 app.use('/api/client', clientController)
 app.use('/api/contractor', conController)
 app.use("/api/job", jobController)
