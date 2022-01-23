@@ -40,6 +40,9 @@ router.get("/jobs/:id", async (req, res) =>{
     }
     res.json(results)
 })
+router.get("/id/:id", (req, res) => {
+    Client.findOne({ ownerId: req.params.id }).then(showName => res.json(showName))
+})
 
 router.post("/new", (req, res) => {
     let conditions = { },
