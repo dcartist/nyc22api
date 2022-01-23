@@ -16,6 +16,14 @@ router.get("/", (req, res) => {
     })
 })
 
+router.get("/id/:id", (req, res) => {
+    console.log(Job.estimatedDocumentCount())
+    Job.findOne({jobId: req.params.id}).then(jobDetails => {
+        res.json(jobDetails)
+    })
+})
+
+
 router.post("/ids", async (req, res) => {
     console.log(req.body.clientJobs)
     var results = []
