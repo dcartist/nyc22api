@@ -40,14 +40,30 @@ router.get("/jobs/:id", async (req, res) =>{
     }
     res.json(results)
 })
-router.get("/id/:id", (req, res) => {
+
+
+router.get("/id/full/:id", async(req, res) => {
+    let firstresults = await Client.find({ ownerId:req.params.id})
+    var results = []
+    for (let i = 0; i<firstresults[0].clientJobs.length; i++){
+        let jobDetails = await Job.findOne({jobId: firstresults[0].clientJobs[i]});
+        results.push(jobDetails)
+    }
+    let finalResults = {}
+    finalResults.details = results
+    let final = {
+        ...firstresults[0]["_doc"],
+        ...finalResults
+    }
+    res.json(final)
+})
+router.get("/id/partial/:id", (req, res) => {
     Client.findOne({ ownerId: req.params.id }).then(showName => res.json(showName))
 })
 
 router.post("/new", (req, res) => {
     let conditions = { },
     update = { $inc: { clientCount: 1 }};
-    // let details = {}
     let details = req.body
     Result.find({}).select('clientCount').then(results=>{
         details.ownerId = parseInt(results[0].clientCount+1)
