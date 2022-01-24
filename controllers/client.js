@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const Property = require('../models/Property.js')
-// const Contractor = require('../models/Contractor.js')
 const Job = require('../models/Job.js')
 const Client = require('../models/Client.js')
 const Result = require('../models/Results.js')
